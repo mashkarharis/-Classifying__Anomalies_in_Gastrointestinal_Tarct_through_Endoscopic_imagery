@@ -1,5 +1,17 @@
 import os
 from PIL import Image
+dir='./MiniResized'
+folders=os.listdir(dir)
+for folder in folders:
+    folderdir=dir+'/'+folder
+    filelist=(os.listdir(folderdir))
+    for file in filelist:
+        filedir=folderdir+'/'+file
+        im = Image.open(filedir)
+        im=im.resize((600,600))
+        im.save(filedir)
+    print('-> '+folder+" : All Images In Folder Resize Success")
+    
 
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
@@ -14,8 +26,8 @@ import os
 from PIL import Image
 print("OK")
 
-file='kvasir-dataset-t'
-m=n=180
+file='MiniResized'
+m=n=96
 
 classes=os.listdir("./"+file)
 x=[]
@@ -35,7 +47,7 @@ for classname in classes:
         
 
 nb_classes=len(classes)
-nb_filters=48
+nb_filters=32
 
 nb_pool=2
 nb_conv=3
@@ -57,14 +69,14 @@ Y_test=np_utils.to_categorical(id_test,nb_classes)
 
 model=Sequential()
 
-model.add(Convolution2D(nb_filters,(nb_conv,nb_conv),activation="relu",data_format='channels_last',input_shape=(m,n,3)));
+model.add(Convolution2D(nb_filters,(nb_conv,nb_conv),padding='same',activation="relu",data_format='channels_last',input_shape=(m,n,3)));
 
 model.add(Convolution2D(nb_filters,(nb_conv,nb_conv), activation="relu"));
 model.add(MaxPooling2D(pool_size=(nb_pool,nb_pool)));
-#7100
 
-model.add(Dense(128,activation="relu"))
-model.add(Dropout(0.5))
+
+model.add(Dense(256,activation="relu"))
+model.add(Dropout(0.4))
 model.add(Flatten())
 model.add(Dropout(0.5))
 model.add(Dense(nb_classes, activation="softmax"))

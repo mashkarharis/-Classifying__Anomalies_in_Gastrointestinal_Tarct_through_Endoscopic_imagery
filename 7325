@@ -15,7 +15,7 @@ from PIL import Image
 print("OK")
 
 file='kvasir-dataset-t'
-m=n=180
+m=n=128
 
 classes=os.listdir("./"+file)
 x=[]

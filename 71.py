@@ -15,7 +15,7 @@ from PIL import Image
 print("OK")
 
 file='kvasir-dataset-t'
-m=n=180
+m=n=96
 
 classes=os.listdir("./"+file)
 x=[]
@@ -35,7 +35,7 @@ for classname in classes:
         
 
 nb_classes=len(classes)
-nb_filters=48
+nb_filters=32
 
 nb_pool=2
 nb_conv=3
